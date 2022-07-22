@@ -1,0 +1,13 @@
+Phyla	Events	Number
+Shigella_boydii	gain	5
+Shigella_boydii	loss	1
+Shigella_boydii	none	5
+Shigella_dysenteriae	gain	7
+Shigella_dysenteriae	loss	3
+Shigella_dysenteriae	none	2
+Shigella_flexneri	gain	23
+Shigella_flexneri	loss	20
+Shigella_flexneri	none	36
+Shigella_sonnei	gain	6
+Shigella_sonnei	loss	13
+Shigella_sonnei	none	1
