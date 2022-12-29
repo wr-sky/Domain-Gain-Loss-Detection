@@ -254,7 +254,7 @@ def mp_based_tagging_algorithm(name_position, pf_dict, spe_tax, short_distance_d
                                 color = '#ff0000'
                             # leaf node
                             if node_po in pos_tax.keys():
-                                name = '\'' + pos_tax[node_po] + '\''
+                                name = pos_tax[node_po]
                             # middle node
                             else:
                                 key_leaf = node_po + '0'
@@ -263,7 +263,7 @@ def mp_based_tagging_algorithm(name_position, pf_dict, spe_tax, short_distance_d
                                 key_right = node_po + '1'
                                 while key_right not in pos_tax.keys():
                                     key_right += '1'
-                                name = '\'' + pos_tax[key_leaf] + '\'|\'' + pos_tax[key_right] + '\''
+                                name = pos_tax[key_leaf] + '|' + pos_tax[key_right]
                             fin.write(name + ',2,4,' + color + ',1,0\n')
                             break
     else:
@@ -485,7 +485,7 @@ def clustering_and_detection(method, name_position, pf_dict, spe_tax, short_dist
                         phy_type_dict[key] += 1
                     length = len(evo_dict[leaf_node])
                     gap = 10
-                    fin.write('\'' + leaf_name + '\',' + str(gap * length))
+                    fin.write(leaf_name + ',' + str(gap * length))
                     for i in range(length):
                         type_evo = evo_dict[leaf_node][i]
                         low_num = i*gap
@@ -591,11 +591,11 @@ def clustering_and_detection(method, name_position, pf_dict, spe_tax, short_dist
                                 key_right = key + '1'
                                 while key_right not in pos_tax.keys():
                                     key_right += '1'
-                                pos_gain_loss['\'{}\'|\'{}\''.format(pos_tax[key_leaf], pos_tax[key_right])] = '+{}'.format(len(gain_str_pf_list[key]))
+                                pos_gain_loss['{}|{}'.format(pos_tax[key_leaf], pos_tax[key_right])] = '+{}'.format(len(gain_str_pf_list[key]))
                             elif key in pos_tax.keys():
-                                pos_gain_loss['\'{}\''.format(pos_tax[key])] = '+{}'.format(len(gain_str_pf_list[key]))
+                                pos_gain_loss['{}'.format(pos_tax[key])] = '+{}'.format(len(gain_str_pf_list[key]))
                     for key in loss_str_pf_list.keys():
-                        if len(loss_str_pf_list[key]) > domain_limitation_value or len(loss_str_pf_list[key]) == 121:
+                        if len(loss_str_pf_list[key]) > domain_limitation_value:
                             if key not in pos_tax.keys() and key != '0':
                                 key_leaf = key + '0'
                                 while key_leaf not in pos_tax.keys():
@@ -603,13 +603,13 @@ def clustering_and_detection(method, name_position, pf_dict, spe_tax, short_dist
                                 key_right = key + '1'
                                 while key_right not in pos_tax.keys():
                                     key_right += '1'
-                                key_tmp = '\'{}\'|\'{}\''.format(pos_tax[key_leaf], pos_tax[key_right])
+                                key_tmp = '{}|{}'.format(pos_tax[key_leaf], pos_tax[key_right])
                                 if key_tmp not in pos_gain_loss.keys():
                                     pos_gain_loss[key_tmp] = '-{}'.format(len(loss_str_pf_list[key]))
                                 else:
                                     pos_gain_loss[key_tmp] = pos_gain_loss[key_tmp]+' -{}'.format(len(loss_str_pf_list[key]))
                             elif key in pos_tax.keys():
-                                key_tmp = '\'{}\''.format(pos_tax[key])
+                                key_tmp = '{}'.format(pos_tax[key])
                                 if key_tmp not in pos_gain_loss.keys():
                                     pos_gain_loss[key_tmp] = '-{}'.format(len(loss_str_pf_list[key]))
                                 else:
@@ -642,7 +642,7 @@ if __name__ == '__main__':
     itol_node = os.path.join(base_path, 'inputs', 'itol_node_label.txt')
     itol_branch = os.path.join(base_path, 'inputs', 'itol_branch_label.txt')
     itol_branch_symbol = os.path.join(base_path, 'inputs', 'itol_branch_symbol.txt')
-    domain_limitation_value = 150
+    domain_limitation_value = 0
 
     # middle results
     json_gain = os.path.join(base_path, 'middle_results', 'gain_pf_str.json')
