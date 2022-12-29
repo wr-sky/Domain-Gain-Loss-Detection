@@ -89,8 +89,9 @@ DATA
 
 #node 4530 will have an internal label 'Oryza sativa' in bold italic blue, starting directly over the node
 #4530,Oryza sativa,0,#0000ff,bold-italic,1
-'Shigella_dysenteriae_022354065.1'|'Shigella_dysenteriae_022354085.1',+194,0,#000000,normal,1,0
-'Shigella_flexneri_000006925.2'|'Shigella_flexneri_002946695.1',-154,0,#000000,normal,1,0
-'Shigella_flexneri_000006925.2'|'Shigella_sonnei_900659655.1',-121,0,#000000,normal,1,0
-'Shigella_boydii_000020185.1'|'Shigella_boydii_001027225.1',-189,0,#000000,normal,1,0
-'Shigella_dysenteriae_000012005.1'|'Shigella_dysenteriae_002949775.1',-403,0,#000000,normal,1,0
+Shigella_dysenteriae_000012005.1|Shigella_dysenteriae_002949775.1,-403 +45,0,#000000,normal,1,0
+Shigella_sonnei_000092525.1|Shigella_sonnei_900659655.1,-84 +38,0,#000000,normal,1,0
+Shigella_flexneri_000006925.2|Shigella_sonnei_900659655.1,-121 +38,0,#000000,normal,1,0
+Shigella_flexneri_000006925.2|Shigella_flexneri_002946695.1,-154 +23,0,#000000,normal,1,0
+Shigella_boydii_000020185.1|Shigella_boydii_001027225.1,-189 +32,0,#000000,normal,1,0
+Shigella_dysenteriae_022354065.1|Shigella_dysenteriae_022354085.1,-19 +194,0,#000000,normal,1,0
