@@ -405,6 +405,7 @@ def gain_and_loss_collection(gain_file, loss_file, output):
                 gain_loss_dict[key] = loss_dict[key].copy()
 
     with open(output, 'w') as fout:
+        fout.write('domain_combinations\tpercentage\tnumber_c\t...\n')
         for key in gain_loss_dict.keys():
             fout.write(key)
             fout.write('\t')
@@ -414,7 +415,7 @@ def gain_and_loss_collection(gain_file, loss_file, output):
             fout.write('\n')
 
 
-def clustering_and_detection(method, name_position, pf_dict, spe_tax, short_distance_dict, pos_tax, domain, json_gain, json_loss, json_never, if_transfer_network, if_itol_sankey, if_number, if_overlaps, transfer_network_output, itol_output, sankey_output, number_output, domain_combination_output, itol_node, itol_branch, domain_limitation_value, itol_branch_symbol):
+def clustering_and_detection(method, name_position, pf_dict, spe_tax, short_distance_dict, pos_tax, domain, json_gain, json_loss, json_never, if_transfer_network, if_itol_sankey, if_number, if_combination, transfer_network_output, itol_output, sankey_output, number_output, domain_combination_output, itol_node, itol_branch, domain_limitation_value, itol_branch_symbol):
     # MP: tag and cluster
     if method == 'MP':
         # 0: Prepare middle results for further analysis in terms of single and multiple domains ############
@@ -510,7 +511,7 @@ def clustering_and_detection(method, name_position, pf_dict, spe_tax, short_dist
                     fin.write(str_tmp)
 
         # 2 multiple domains #####################################
-        if if_number or if_overlaps:
+        if if_number or if_combination:
             # 2.1 preprocess： **_str_pf_list[node_position] = [pf1, pf2, ...] ###############
             # gain
             gain_str_pf_list = dict()
@@ -618,7 +619,7 @@ def clustering_and_detection(method, name_position, pf_dict, spe_tax, short_dist
                         str_tmp = '{},{},0,#000000,normal,1,0\n'.format(key, pos_gain_loss[key])
                         fin.write(str_tmp)
 
-            if if_overlaps:
+            if if_combination:
                 print('Collecting domain combinations')
                 # 2.3 domains combinations
                 for e_type in ['gain', 'loss']:
@@ -642,28 +643,28 @@ if __name__ == '__main__':
     itol_node = os.path.join(base_path, 'inputs', 'itol_node_label.txt')
     itol_branch = os.path.join(base_path, 'inputs', 'itol_branch_label.txt')
     itol_branch_symbol = os.path.join(base_path, 'inputs', 'itol_branch_symbol.txt')
-    domain_limitation_value = 0
+    domain_limitation_value = 4
 
     # middle results
     json_gain = os.path.join(base_path, 'middle_results', 'gain_pf_str.json')
     json_loss = os.path.join(base_path, 'middle_results', 'loss_pf_str.json')
     json_never = os.path.join(base_path, 'middle_results', 'never_pf_str.json')
 
-    # domain for transfer network & itol & sankey outputs
-    domain = 'PF05925.13'
+    # domain for iTOL leaf_tag and node_event & sankey outputs
+    domain = 'PF00161.20'
     # outputs & switch
     if_transfer_network = True
-    transfer_network_output = os.path.join(base_path, 'outputs', 'single_domain', 'transfer_network_{}.txt'.format(domain))
+    transfer_network_output = os.path.join(base_path, 'outputs', 'single_domain', 'itol_node_event_{}.txt'.format(domain))
 
     if_itol_sankey = True
-    itol_output = os.path.join(base_path, 'outputs', 'single_domain', 'itol_render_{}.txt'.format(domain))
+    itol_output = os.path.join(base_path, 'outputs', 'single_domain', 'itol_leaf_tag_{}.txt'.format(domain))
     sankey_output = os.path.join(base_path, 'outputs', 'single_domain', 'sankey_phy_type_{}.tsv'.format(domain))
+
+    if_combination = True
+    domain_combination_output = os.path.join(base_path, 'outputs', 'domain_combination', 'domain_combination_{}.tsv')
 
     if_number = True
     number_output = os.path.join(base_path, 'outputs', 'number_collection', 'number_collection_{}.tsv')
-
-    if_overlaps = True
-    domain_combination_output = os.path.join(base_path, 'outputs', 'domain_combination', 'domain_combination_{}.tsv')
 
     # ************************************** Protein domain *********************************************************
     # pf_dict['PF00627.32'] = [tax_id_1, tax_id_2, ...]
@@ -686,5 +687,5 @@ if __name__ == '__main__':
     # ******************************* Clustering & gain and loss event detection ************************************
     method_list = ['DBSCAN', 'MP', 'ML_NUM', 'ML_DIS', 'SD']
     method = method_list[1]
-    clustering_and_detection(method, name_position, pf_dict, spe_tax, short_distance_dict, pos_tax, domain, json_gain, json_loss, json_never, if_transfer_network, if_itol_sankey, if_number, if_overlaps, transfer_network_output, itol_output, sankey_output, number_output, domain_combination_output, itol_node, itol_branch, domain_limitation_value, itol_branch_symbol)
+    clustering_and_detection(method, name_position, pf_dict, spe_tax, short_distance_dict, pos_tax, domain, json_gain, json_loss, json_never, if_transfer_network, if_itol_sankey, if_number, if_combination, transfer_network_output, itol_output, sankey_output, number_output, domain_combination_output, itol_node, itol_branch, domain_limitation_value, itol_branch_symbol)
     print('Done, please find results in the outputs document')
